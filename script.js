@@ -15,21 +15,15 @@ document.addEventListener("DOMContentLoaded", function () {
     randomNumber = parseInt(randomNumber);
   }
 
+  // Variável para rastrear o score do usuário
+  var score = 100;
+
   // Cria um array para armazenar os acertos
   var acertos = [];
 
   // Cria um array que recebe o número aleatório dividido em uma lista ordenada
   var number = String(randomNumber).split("").map(function (randomNumber) {
     return Number(randomNumber);
-  });
-
-  // Event listener para o botão "Próxima Jogada"
-  var nextButton = document.querySelector("#button-next");
-  nextButton.addEventListener("click", function () {
-    localStorage.removeItem("randomNumber"); // Limpa o número aleatório
-    localStorage.removeItem("resetGame"); // Limpa a flag de reinício do jogo
-    document.getElementById("button-next").style.display = "none"; // Oculta o botão "Próxima Jogada"
-    location.reload(); // Recarrega a página para gerar um novo número aleatório
   });
 
   document.addEventListener("keypress", function (e) {
@@ -85,22 +79,49 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
 
+      // Atualiza o score
+      if (acertos.length === 0) {
+        // Subtrai 5 pontos por tentativa errada
+        score -= 10;
+        localStorage.setItem("score", score);
+      } else if (acertos[0] === "😀" && acertos[1] === "😀" && acertos[2] === "😀" && acertos[3] === "😀") {
+        // Adiciona 60 pontos quando o usuário acertar
+        score += 60;
+
+        localStorage.setItem("score", score);
+      }
+
+      score -= 5;
+      localStorage.setItem("score", score);
+
       comparar = [...number];
 
       // Caso o array acertos esteja vazio, exibe um emoji
       if (acertos.length === 0) {
         acertos = "🚫";
-        localStorage.setItem("resetGame", "true"); // Define a flag para reiniciar o jogo
-        document.getElementById("button-next").style.display = "block"; // Exibe o botão "Próxima Jogada"
       }
+
+      // Exibe o score
+      console.log("Score: " + score);
 
       let list = document.getElementById("palpite").innerHTML;
       let list2 = document.getElementById("dica").innerHTML;
 
       // Verifica se todas as posições do array acertos têm o valor correspondente "😀"; caso verdadeiro, exibe a mensagem de acerto
       if (acertos[0] === "😀" && acertos[1] === "😀" && acertos[2] === "😀" && acertos[3] === "😀") {
-        list += "<li>" + "Parabéns! Você acertou o número era: " + randomNumber + "</li>";
+        list += "<li>" + "Parabéns! Você acertou o número era: " + randomNumber + "Você marcou " + score + "pontos" + "</li>";
+        list += "<button id='button-next'>" + "próxima" + "</button>";
         document.getElementById("palpite").innerHTML = list;
+
+        localStorage.removeItem("randomNumber"); // Limpa o número aleatório
+        localStorage.removeItem("resetGame"); // Limpa a flag de reinício do jogo
+
+        // Event listener para o botão "Próxima Jogada"
+        var nextButton = document.querySelector("#button-next");
+        nextButton.addEventListener("click", function () {
+          document.getElementById("button-next").style.display = "none"; // Oculta o botão "Próxima Jogada"
+          location.reload(); // Recarrega a página para gerar um novo número aleatório
+        });
       } else {
         if (acertos != "🚫") {
           acertos.sort(function (a, b) {
