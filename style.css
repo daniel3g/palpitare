@@ -216,4 +216,8 @@ span {
     .displays-right {
         display: none;
    }
+
+   #button-send {
+    display: block;
+}
 }
