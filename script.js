@@ -16,7 +16,44 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Variável para rastrear o score do usuário
-  var score = 100;
+  var xp = localStorage.getItem("xp");  
+    if(!xp){
+      xp = 0;
+    }else{
+      xp = parseInt(xp);
+    }
+
+  // Variável que cria pontos nível do usuário
+  var level = localStorage.getItem("level");
+    if(!level){
+      level = 1;
+    }else{
+      level = parseInt(level);
+    }
+
+    var nextLevel = Math.trunc(50/3*(Math.pow((level + 1), 3)-6*Math.pow((level + 1), 2)+17*(level + 1)-12));
+    localStorage.setItem("nextLevel", nextLevel);
+    console.log(nextLevel);
+
+    if(xp >= nextLevel){
+      level += 1;
+      console.log(level);
+    }
+
+    localStorage.setItem("level", level);
+
+    nextLevel = Math.trunc(50/3*(Math.pow((level + 1), 3)-6*Math.pow((level + 1), 2)+17*(level + 1)-12));
+    localStorage.setItem("nextLevel", nextLevel);
+
+    document.getElementById("xp").innerHTML = `${xp}/${nextLevel}`;
+    document.getElementById("level").innerHTML = level;
+
+  var score = localStorage.getItem("score");
+  if(!score){
+    score = 100;
+  }else{
+    score = parseInt(score);
+  }
 
   // Cria um array para armazenar os acertos
   var acertos = [];
@@ -86,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("score", score);
       } else if (acertos[0] === "😀" && acertos[1] === "😀" && acertos[2] === "😀" && acertos[3] === "😀") {
         // Adiciona 60 pontos quando o usuário acertar
-        score += 60;
+        score += Math.trunc((Math.pow(level, 2)*5)/2);
 
         localStorage.setItem("score", score);
       }
@@ -106,14 +143,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
       let list = document.getElementById("palpite").innerHTML;
       let list2 = document.getElementById("dica").innerHTML;
+      
 
       // Verifica se todas as posições do array acertos têm o valor correspondente "😀"; caso verdadeiro, exibe a mensagem de acerto
       if (acertos[0] === "😀" && acertos[1] === "😀" && acertos[2] === "😀" && acertos[3] === "😀") {
+        xp += score;
+        localStorage.setItem("xp", xp);
         list += "<li>" + "Parabéns! Você acertou o número era: " + randomNumber + "Você marcou " + score + "pontos" + "</li>";
         list += "<button id='button-next'>" + "próxima" + "</button>";
         document.getElementById("palpite").innerHTML = list;
 
         localStorage.removeItem("randomNumber"); // Limpa o número aleatório
+        localStorage.removeItem("score"); // Limpa o score da partida
         localStorage.removeItem("resetGame"); // Limpa a flag de reinício do jogo
 
         // Event listener para o botão "Próxima Jogada"
