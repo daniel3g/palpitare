@@ -1,51 +1,79 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Palpitare</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="displays-left">
-            <div class="display-top">
-                <div class="scroll" id="div_chat">
-                    <div>
-                        <input type="number" id="input-palpite" placeholder="palpite">
-                        <input type="button" value="Palpitar" id="button-send">
-                    </div>
-                    <div class="resultado">
-                      <div id="palpite"></div>
-                      <div id="dica"></div>
-                      
-                  </div>
+    <main class="container">
+        <section class="game-panel">
+            <header class="hero">
+                <p class="eyebrow">Jogo de lógica</p>
+                <h1>Palpitare</h1>
+                <p class="hero-text">Descubra o número secreto de 4 dígitos pelas dicas de posição e acerto.</p>
+            </header>
+
+            <section class="card input-card" aria-labelledby="guess-title">
+                <div class="section-heading">
+                    <h2 id="guess-title">Seu palpite</h2>
+                    <p>Digite 4 números e pressione Enter.</p>
                 </div>
-            </div>
-            <div class="display-bottom">
-                <h2>informações</h2>
-                <p>Insira um numero com 4 algarismos e pressione enter, caso um dos algarismos esteja na posição correta será retornado como resposta <span>😀</span>, caso um dos algarismos esteja correto na posição errada, será retornado como resposta <span>😏</span>, caso o retorno seja <span>🚫</span> significa que nenhum dos algarismos está correto. Divirta-se</p>
-            </div>
-        </div>
-        <div class="displays-right">
-            <div class="buttons">
-                <h2>xp</h2>
-                <span id="xp"></span>
-            </div>
-            <div class="buttons">
-                <h2>Nível</h2>
-                <span id="level"></span>
-            </div>
-            <div class="buttons">
-                <span>REGRAS</span>
-            </div>
-            <div class="buttons">
-                <span>CREDITOS</span>
-            </div>
-        </div>
-    </div>
-    <form action=""></form>
+
+                <div class="guess-entry">
+                    <input type="number" id="input-palpite" placeholder="Ex: 1234" inputmode="numeric">
+                    <input type="button" value="Palpitar" id="button-send">
+                </div>
+            </section>
+
+            <section class="card history-card" aria-labelledby="history-title">
+                <div class="section-heading">
+                    <h2 id="history-title">Tentativas</h2>
+                    <p>Veja seus palpites e as dicas retornadas.</p>
+                </div>
+
+                <div class="scroll" id="div_chat">
+                    <div class="resultado">
+                        <div class="history-column">
+                            <h3>Palpite</h3>
+                            <div id="palpite"></div>
+                        </div>
+                        <div class="history-column">
+                            <h3>Dica</h3>
+                            <div id="dica"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <aside class="sidebar">
+            <section class="card stats-card">
+                <h2>Progresso</h2>
+                <div class="stat-grid">
+                    <div class="stat-box">
+                        <span class="stat-label">XP</span>
+                        <span class="stat-value" id="xp"></span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Nível</span>
+                        <span class="stat-value" id="level"></span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card info-card">
+                <h2>Como jogar</h2>
+                <p>Insira um número com 4 algarismos e pressione Enter.</p>
+                <p><strong>😀</strong> dígito correto na posição correta.</p>
+                <p><strong>😏</strong> dígito correto na posição errada.</p>
+                <p><strong>🚫</strong> nenhum dos dígitos está correto.</p>
+            </section>
+        </aside>
+    </main>
+
     <script src="script.js"></script>
 </body>
 </html>
