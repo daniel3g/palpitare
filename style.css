@@ -189,16 +189,23 @@ input:focus {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     line-height: 1.6;
     word-break: break-word;
+}
+
+#palpite li,
+#dica li {
+    display: flex;
+    align-items: center;
+    min-height: 34px;
 }
 
 #dica span {
     display: inline-flex;
     align-items: center;
-    min-height: 36px;
-    font-size: 1.7rem;
+    min-height: 34px;
+    font-size: 1.45rem;
     line-height: 1;
     letter-spacing: 0.08em;
 }
@@ -307,11 +314,10 @@ li {
 
     #palpite,
     #dica {
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
 
     #dica span {
-        min-height: 34px;
-        font-size: 1.55rem;
+        font-size: 1.35rem;
     }
 }
